@@ -1,135 +1,221 @@
 
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NOVEX Daily Routine</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#030712">
+<title>NOVEX SYSTEM</title>
 <style>
 *{box-sizing:border-box}
+:root{--cyan:#00e5ff;--blue:#168bff;--bg:#030712}
 body{
-  margin:0;background:#030912;color:#eaf7ff;
-  font-family:Arial,sans-serif;padding:20px;
+ margin:0;background:radial-gradient(ellipse at top,#10264b,#030712 65%);
+ color:#eaf8ff;font-family:Arial,sans-serif;min-height:100vh;
 }
-header{text-align:center;padding:22px 0}
-h1{color:#00e5ff;letter-spacing:3px}
-header p{color:#8baec5}
-.progress{
-  background:#10283a;border-radius:12px;padding:15px;
-  margin-bottom:20px;
+header{text-align:center;padding:24px 12px 10px}
+h1{color:var(--cyan);letter-spacing:5px;margin-bottom:5px}
+.sub{color:#86a9ca;font-size:11px;letter-spacing:3px}
+.wrap{max-width:600px;margin:auto;padding:12px}
+.panel{
+ background:rgba(7,20,39,.92);border:1px solid #16496b;
+ border-radius:16px;padding:16px;margin-bottom:14px;
+ box-shadow:0 0 18px #007bff12;
 }
-.track{height:9px;background:#20394b;border-radius:10px;overflow:hidden}
-#bar{height:100%;width:0;background:#00e5ff;transition:.3s}
-.card{
-  background:#091827;border:1px solid #173a51;
-  border-radius:15px;padding:16px;margin:12px 0;
+.core{
+ width:142px;height:142px;border-radius:50%;margin:12px auto 20px;
+ display:grid;place-items:center;position:relative;
+ border:2px solid var(--cyan);
+ box-shadow:0 0 16px #00e5ff, inset 0 0 24px #168bff;
+ animation:pulse 2.5s infinite;
 }
-.time{color:#00e5ff;font-weight:bold;font-size:18px}
-h2{font-size:17px;margin:8px 0}
-p{line-height:1.5;color:#c0d5e5}
-label{display:flex;gap:10px;align-items:flex-start;cursor:pointer}
-input{accent-color:#00e5ff;width:19px;height:19px;flex-shrink:0}
+.core:before,.core:after{
+ content:"";position:absolute;border:1px solid #168bff;
+ border-radius:50%;inset:-12px;animation:spin 8s linear infinite;
+}
+.core:after{inset:8px;border-style:dashed;animation:spin 12s linear infinite reverse}
+.core span{font-size:27px;color:var(--cyan);font-weight:bold;z-index:1}
+@keyframes pulse{50%{box-shadow:0 0 32px #00e5ff,inset 0 0 35px #168bff}}
+@keyframes spin{to{transform:rotate(360deg)}}
+.row{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.muted{color:#8baac5;font-size:13px}
+.big{font-size:24px;font-weight:bold;color:var(--cyan)}
+.track{height:10px;background:#172b43;border-radius:20px;overflow:hidden;margin:12px 0}
+.bar{height:100%;width:0;background:linear-gradient(90deg,#168bff,#00e5ff);transition:width .5s}
+h2{font-size:16px;color:var(--cyan);letter-spacing:1px}
+.quest{
+ display:flex;align-items:center;gap:12px;padding:13px 0;
+ border-bottom:1px solid #183047;
+}
+.quest:last-child{border:0}
+.quest input{width:20px;height:20px;accent-color:#00e5ff;flex-shrink:0}
+.quest .info{flex:1}
+.quest b{font-size:14px}
+.quest small{display:block;color:#91abc3;margin-top:5px}
+.xp{font-size:12px;color:var(--cyan);white-space:nowrap}
 button{
-  background:#00cde9;color:#00121d;border:0;
-  border-radius:10px;padding:12px;font-weight:bold;
-  cursor:pointer;margin:5px 4px 5px 0;
+ background:#071b30;color:var(--cyan);border:1px solid #168bff;
+ padding:12px;border-radius:9px;font-weight:bold;cursor:pointer;
 }
-footer{text-align:center;color:#7fa1b9;margin:25px 0}
+button:active{transform:scale(.97)}
+.primary{background:#00d9f5;color:#00111c}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{background:#0a1b30;padding:13px;border-radius:10px}
+.stat strong{display:block;color:var(--cyan);font-size:20px;margin-top:7px}
+#toast{
+ display:none;position:fixed;inset:0;background:#020611ed;
+ z-index:5;align-items:center;justify-content:center;text-align:center;padding:25px
+}
+#toast .box{border:1px solid var(--cyan);padding:28px;border-radius:20px;
+ box-shadow:0 0 40px #00e5ff55;background:#071326}
+#toast h2{font-size:28px}
+footer{text-align:center;color:#65839e;font-size:11px;padding:20px}
 </style>
 </head>
 <body>
-
 <header>
-  <h1>NOVEX ROUTINE</h1>
-  <p>GYM • WORK • HEIGHT SUPPORT • GAMING</p>
-  <p>START DATE: 1 NOVEMBER 2026</p>
+ <div class="sub">PERSONAL PROGRESSION INTERFACE</div>
+ <h1>NOVEX SYSTEM</h1>
+ <div class="sub">AWAKEN YOUR POTENTIAL</div>
 </header>
 
-<div class="progress">
-  <b>Today's progress: <span id="count">0/12</span></b>
-  <p id="message">Chalo bhai, aaj ka din shuru karo!</p>
-  <div class="track"><div id="bar"></div></div>
-</div>
+<main class="wrap">
+ <section class="panel" style="text-align:center">
+  <div class="core"><span id="rankCore">E</span></div>
+  <div class="sub">SYSTEM ONLINE</div>
+  <h2 id="greeting">WELCOME, PLAYER</h2>
+  <div class="muted">Your journey begins today.</div>
+ </section>
 
-<div id="schedule"></div>
+ <section class="panel">
+  <div class="row">
+   <div><div class="muted">CURRENT LEVEL</div><div class="big" id="level">01</div></div>
+   <div style="text-align:right"><div class="muted">TOTAL XP</div><div class="big" id="total">0</div></div>
+  </div>
+  <div class="track"><div class="bar" id="bar"></div></div>
+  <div class="row muted"><span id="rank">E-RANK</span><span id="progress">0 / 100 XP</span></div>
+ </section>
 
-<div class="card">
-  <h2>💪 Height & Health Rules</h2>
-  <p>✓ Balanced meals: doodh/dahi, daal, chana, sabzi, fruit aur protein.</p>
-  <p>✓ Gym mein correct form aur trainer ki guidance.</p>
-  <p>✓ Stretching posture aur flexibility ke liye hai, height badhane ki guarantee nahi.</p>
-  <p>✓ 16–17 saal mein aam taur par 8–10 ghante ki neend target karo.</p>
-  <p>✓ Height growth ki chinta ho toh guardian ke saath doctor se check-up karao.</p>
-  <p>✓ Height pills ya hormones bina doctor ke kabhi mat lena.</p>
-</div>
+ <section class="panel">
+  <div class="row"><h2>DAILY QUESTS</h2><span class="muted" id="done">0/5</span></div>
+  <div id="quests"></div>
+  <p class="muted">Complete real tasks to earn XP. Your progress is saved on this device.</p>
+ </section>
 
-<div class="card">
-  <h2>🎮 YouTube Daily Target</h2>
-  <p>1. Gameplay record karo.</p>
-  <p>2. Video edit karo.</p>
-  <p>3. Thumbnail, title aur description banao.</p>
-  <p>4. Roz ek video upload ya schedule karo.</p>
-  <p>Tip: Neend ke liye video pehle se record karke rakho.</p>
-</div>
+ <section class="panel">
+  <h2>PLAYER STATUS</h2>
+  <div class="grid">
+   <div class="stat"><span class="muted">QUESTS DONE</span><strong id="completed">0</strong></div>
+   <div class="stat"><span class="muted">STREAK</span><strong id="streak">0 days</strong></div>
+   <div class="stat"><span class="muted">TODAY'S XP</span><strong id="todayxp">0</strong></div>
+   <div class="stat"><span class="muted">NEXT RANK</span><strong id="next">D-RANK</strong></div>
+  </div>
+ </section>
 
-<button onclick="resetDay()">Reset Today's Checklist</button>
-<button onclick="window.print()">Print Schedule</button>
+ <section class="panel">
+  <h2>SYSTEM CONTROLS</h2>
+  <button onclick="renamePlayer()">SET PLAYER NAME</button>
+  <button onclick="soundToggle()" id="soundBtn">SOUND: OFF</button>
+  <button onclick="resetProgress()">RESET PROGRESS</button>
+ </section>
+ <footer>NOVEX SYSTEM • CONSISTENCY OVER PERFECTION</footer>
+</main>
 
-<footer>NOVEX GAMERZ • DISCIPLINE EVERY DAY</footer>
+<div id="toast"><div class="box">
+ <div class="sub">SYSTEM NOTIFICATION</div>
+ <h2 id="toastTitle">QUEST COMPLETE</h2>
+ <p id="toastText">XP acquired.</p>
+ <button class="primary" onclick="closeToast()">CONTINUE</button>
+</div></div>
 
 <script>
-const tasks = [
- ["5:30 AM","Utho aur fresh ho","Brush, washroom aur paani."],
- ["5:45 AM","Gym ke liye ready","Zaroorat ho toh halka snack."],
- ["6:00 AM","Gym ke liye niklo","Travel time lagbhag 15 minute."],
- ["6:15–7:00 AM","GYM WORKOUT","Warm-up, correct form aur trainer ki guidance."],
- ["7:00–8:00 AM","Ghar aao aur breakfast","Nahana, doodh/dahi, daal/ande aur balanced food."],
- ["8:00–10:00 AM","Personal time","Padhai, zaroori kaam, tiffin aur rest."],
- ["10:00–10:45 AM","Kaam ki preparation","Kapde, bag aur lunch ready karo."],
- ["11:00 AM–7:00 PM","WORK TIME","Kaam, lunch, paani aur zaroorat par short breaks."],
- ["7:00–8:00 PM","Ghar aur dinner","Fresh ho, dinner karo aur aaram."],
- ["8:00–8:30 PM","YouTube planning","Footage aur agle video ki checklist."],
- ["8:30–10:00 PM","Gaming video","Record/edit; zaroorat par pehle se recorded footage."],
- ["10:00 PM","Sone ki preparation","Agar 5:30 AM uthna hai toh neend ke liye jaldi so." ]
+const tasks=[
+ {id:"gym",name:"TRAINING SESSION",desc:"Workout safely or complete a planned recovery day.",xp:25},
+ {id:"food",name:"NUTRITION QUEST",desc:"Eat balanced meals and drink enough water.",xp:15},
+ {id:"work",name:"WORK RESPONSIBILITY",desc:"Complete your work responsibilities.",xp:20},
+ {id:"video",name:"CREATOR QUEST",desc:"Progress on or publish one gaming video.",xp:25},
+ {id:"sleep",name:"RECOVERY QUEST",desc:"Prepare for enough sleep and recovery.",xp:15}
 ];
-
-const root = document.getElementById("schedule");
-
-tasks.forEach((t,i)=>{
- const card=document.createElement("div");
- card.className="card";
- const label=document.createElement("label");
- const cb=document.createElement("input");
- cb.type="checkbox";
- cb.addEventListener("change",update);
- const content=document.createElement("div");
- const time=document.createElement("div");
- time.className="time";
- time.textContent=t[0];
- const title=document.createElement("h2");
- title.textContent=t[1];
- const desc=document.createElement("p");
- desc.textContent=t[2];
- content.append(time,title,desc);
- label.append(cb,content);
- card.append(label);
- root.append(card);
-});
-
-function update(){
- const checks=[...document.querySelectorAll('input[type="checkbox"]')];
- const done=checks.filter(c=>c.checked).length;
- document.getElementById("count").textContent=done+"/"+checks.length;
- document.getElementById("bar").style.width=(done/checks.length*100)+"%";
- document.getElementById("message").textContent=
- done===checks.length?"Excellent! Aaj ka checklist complete!":
- "Bhai, ek-ek task complete karte jao.";
+const key="novexSystemV1";
+let state;
+try{state=JSON.parse(localStorage.getItem(key))}catch(e){}
+if(!state||typeof state!=="object")state={xp:0,done:{},history:{},name:"PLAYER",sound:false};
+state.xp=Number(state.xp)||0;
+state.done=state.done||{};
+state.history=state.history||{};
+state.name=state.name||"PLAYER";
+const today=()=>new Date().toLocaleDateString("en-CA");
+function save(){try{localStorage.setItem(key,JSON.stringify(state))}catch(e){}}
+function dayState(){if(state.day!==today()){state.day=today();state.done={};save()}}
+function rankFor(level){return level>=30?"S":level>=20?"A":level>=12?"B":level>=7?"C":level>=3?"D":"E"}
+function render(){
+ dayState();
+ document.getElementById("greeting").textContent="WELCOME, "+state.name;
+ const level=Math.floor(state.xp/100)+1;
+ const into=state.xp%100;
+ const rank=rankFor(level);
+ document.getElementById("level").textContent=String(level).padStart(2,"0");
+ document.getElementById("total").textContent=state.xp;
+ document.getElementById("bar").style.width=into+"%";
+ document.getElementById("progress").textContent=into+" / 100 XP";
+ document.getElementById("rank").textContent=rank+"-RANK";
+ document.getElementById("rankCore").textContent=rank;
+ document.getElementById("next").textContent=rankFor(level+1)+"-RANK";
+ document.getElementById("todayxp").textContent=tasks.reduce((s,t)=>s+(state.done[t.id]?t.xp:0),0);
+ const count=tasks.filter(t=>state.done[t.id]).length;
+ document.getElementById("done").textContent=count+"/5";
+ document.getElementById("completed").textContent=Object.keys(state.history).length;
+ document.getElementById("streak").textContent=(state.streak||0)+" days";
+ document.getElementById("soundBtn").textContent="SOUND: "+(state.sound?"ON":"OFF");
+ const root=document.getElementById("quests");root.innerHTML="";
+ tasks.forEach(t=>{
+  const label=document.createElement("label");label.className="quest";
+  const cb=document.createElement("input");cb.type="checkbox";cb.checked=!!state.done[t.id];
+  cb.addEventListener("change",()=>complete(t,cb.checked));
+  const info=document.createElement("div");info.className="info";
+  const b=document.createElement("b");b.textContent=t.name;
+  const small=document.createElement("small");small.textContent=t.desc;
+  info.append(b,small);
+  const xp=document.createElement("span");xp.className="xp";xp.textContent="+"+t.xp+" XP";
+  label.append(cb,info,xp);root.append(label);
+ });
 }
-
-function resetDay(){
- document.querySelectorAll('input[type="checkbox"]').forEach(c=>c.checked=false);
- update();
+function complete(t,checked){
+ const oldLevel=Math.floor(state.xp/100)+1;
+ if(checked&&!state.done[t.id]){
+  state.done[t.id]=true;state.xp+=t.xp;state.history[today()+"-"+t.id]=true;
+  const newLevel=Math.floor(state.xp/100)+1;
+  save();render();
+  if(newLevel>oldLevel)showToast("LEVEL UP!","You reached level "+newLevel+"!");
+  else showToast("QUEST COMPLETE","+"+t.xp+" XP acquired.");
+  if(state.sound)beep();
+ }else if(!checked&&state.done[t.id]){
+  state.done[t.id]=false;state.xp=Math.max(0,state.xp-t.xp);
+  delete state.history[today()+"-"+t.id];save();render();
+ }
 }
+function showToast(title,msg){
+ document.getElementById("toastTitle").textContent=title;
+ document.getElementById("toastText").textContent=msg;
+ document.getElementById("toast").style.display="flex";
+}
+function closeToast(){document.getElementById("toast").style.display="none"}
+function renamePlayer(){
+ const n=prompt("Enter player name:",state.name);
+ if(n&&n.trim()){state.name=n.trim().slice(0,24);save();render()}
+}
+function soundToggle(){state.sound=!state.sound;save();render()}
+function beep(){
+ try{const c=new(window.AudioContext||window.webkitAudioContext)();
+ const o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);
+ o.frequency.value=660;g.gain.value=.04;o.start();o.stop(c.currentTime+.12)}catch(e){}
+}
+function resetProgress(){
+ if(confirm("Reset all XP and quest history?")){
+ state={xp:0,done:{},history:{},name:state.name,sound:state.sound};save();render()
+ }
+}
+dayState();render();
 </script>
 </body>
 </html>

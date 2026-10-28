@@ -1,0 +1,135 @@
+
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NOVEX Daily Routine</title>
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;background:#030912;color:#eaf7ff;
+  font-family:Arial,sans-serif;padding:20px;
+}
+header{text-align:center;padding:22px 0}
+h1{color:#00e5ff;letter-spacing:3px}
+header p{color:#8baec5}
+.progress{
+  background:#10283a;border-radius:12px;padding:15px;
+  margin-bottom:20px;
+}
+.track{height:9px;background:#20394b;border-radius:10px;overflow:hidden}
+#bar{height:100%;width:0;background:#00e5ff;transition:.3s}
+.card{
+  background:#091827;border:1px solid #173a51;
+  border-radius:15px;padding:16px;margin:12px 0;
+}
+.time{color:#00e5ff;font-weight:bold;font-size:18px}
+h2{font-size:17px;margin:8px 0}
+p{line-height:1.5;color:#c0d5e5}
+label{display:flex;gap:10px;align-items:flex-start;cursor:pointer}
+input{accent-color:#00e5ff;width:19px;height:19px;flex-shrink:0}
+button{
+  background:#00cde9;color:#00121d;border:0;
+  border-radius:10px;padding:12px;font-weight:bold;
+  cursor:pointer;margin:5px 4px 5px 0;
+}
+footer{text-align:center;color:#7fa1b9;margin:25px 0}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>NOVEX ROUTINE</h1>
+  <p>GYM • WORK • HEIGHT SUPPORT • GAMING</p>
+  <p>START DATE: 1 NOVEMBER 2026</p>
+</header>
+
+<div class="progress">
+  <b>Today's progress: <span id="count">0/12</span></b>
+  <p id="message">Chalo bhai, aaj ka din shuru karo!</p>
+  <div class="track"><div id="bar"></div></div>
+</div>
+
+<div id="schedule"></div>
+
+<div class="card">
+  <h2>💪 Height & Health Rules</h2>
+  <p>✓ Balanced meals: doodh/dahi, daal, chana, sabzi, fruit aur protein.</p>
+  <p>✓ Gym mein correct form aur trainer ki guidance.</p>
+  <p>✓ Stretching posture aur flexibility ke liye hai, height badhane ki guarantee nahi.</p>
+  <p>✓ 16–17 saal mein aam taur par 8–10 ghante ki neend target karo.</p>
+  <p>✓ Height growth ki chinta ho toh guardian ke saath doctor se check-up karao.</p>
+  <p>✓ Height pills ya hormones bina doctor ke kabhi mat lena.</p>
+</div>
+
+<div class="card">
+  <h2>🎮 YouTube Daily Target</h2>
+  <p>1. Gameplay record karo.</p>
+  <p>2. Video edit karo.</p>
+  <p>3. Thumbnail, title aur description banao.</p>
+  <p>4. Roz ek video upload ya schedule karo.</p>
+  <p>Tip: Neend ke liye video pehle se record karke rakho.</p>
+</div>
+
+<button onclick="resetDay()">Reset Today's Checklist</button>
+<button onclick="window.print()">Print Schedule</button>
+
+<footer>NOVEX GAMERZ • DISCIPLINE EVERY DAY</footer>
+
+<script>
+const tasks = [
+ ["5:30 AM","Utho aur fresh ho","Brush, washroom aur paani."],
+ ["5:45 AM","Gym ke liye ready","Zaroorat ho toh halka snack."],
+ ["6:00 AM","Gym ke liye niklo","Travel time lagbhag 15 minute."],
+ ["6:15–7:00 AM","GYM WORKOUT","Warm-up, correct form aur trainer ki guidance."],
+ ["7:00–8:00 AM","Ghar aao aur breakfast","Nahana, doodh/dahi, daal/ande aur balanced food."],
+ ["8:00–10:00 AM","Personal time","Padhai, zaroori kaam, tiffin aur rest."],
+ ["10:00–10:45 AM","Kaam ki preparation","Kapde, bag aur lunch ready karo."],
+ ["11:00 AM–7:00 PM","WORK TIME","Kaam, lunch, paani aur zaroorat par short breaks."],
+ ["7:00–8:00 PM","Ghar aur dinner","Fresh ho, dinner karo aur aaram."],
+ ["8:00–8:30 PM","YouTube planning","Footage aur agle video ki checklist."],
+ ["8:30–10:00 PM","Gaming video","Record/edit; zaroorat par pehle se recorded footage."],
+ ["10:00 PM","Sone ki preparation","Agar 5:30 AM uthna hai toh neend ke liye jaldi so." ]
+];
+
+const root = document.getElementById("schedule");
+
+tasks.forEach((t,i)=>{
+ const card=document.createElement("div");
+ card.className="card";
+ const label=document.createElement("label");
+ const cb=document.createElement("input");
+ cb.type="checkbox";
+ cb.addEventListener("change",update);
+ const content=document.createElement("div");
+ const time=document.createElement("div");
+ time.className="time";
+ time.textContent=t[0];
+ const title=document.createElement("h2");
+ title.textContent=t[1];
+ const desc=document.createElement("p");
+ desc.textContent=t[2];
+ content.append(time,title,desc);
+ label.append(cb,content);
+ card.append(label);
+ root.append(card);
+});
+
+function update(){
+ const checks=[...document.querySelectorAll('input[type="checkbox"]')];
+ const done=checks.filter(c=>c.checked).length;
+ document.getElementById("count").textContent=done+"/"+checks.length;
+ document.getElementById("bar").style.width=(done/checks.length*100)+"%";
+ document.getElementById("message").textContent=
+ done===checks.length?"Excellent! Aaj ka checklist complete!":
+ "Bhai, ek-ek task complete karte jao.";
+}
+
+function resetDay(){
+ document.querySelectorAll('input[type="checkbox"]').forEach(c=>c.checked=false);
+ update();
+}
+</script>
+</body>
+</html>
